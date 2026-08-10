@@ -6,6 +6,10 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   const [isEditing, setIsEditing] = useState(false);
   const [workingTitle, setWorkingTitle] = useState(todo.title);
 
+  const handleEdit = (event) => {
+    setWorkingTitle(event.target.value);
+  };
+
   const handleCancel = () => {
     setWorkingTitle(todo.title);
     setIsEditing(false);
@@ -30,8 +34,10 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
         {isEditing ? (
           <>
             <TextInputWithLabel
+              elementId={`todoTitle${todo.id}`}
+              labelText="Todo"
               value={workingTitle}
-              onChange={(event) => setWorkingTitle(event.target.value)}
+              onChange={handleEdit}
             />
 
             <button type="button" onClick={handleCancel}>
@@ -39,8 +45,7 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
             </button>
 
             <button
-              type="button"
-              onClick={handleUpdate}
+              type="submit"
               disabled={!isValidTodoTitle(workingTitle)}
             >
               Update
@@ -53,7 +58,6 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
               checked={todo.isCompleted}
               onChange={() => onCompleteTodo(todo.id)}
             />
-
             <span onClick={() => setIsEditing(true)}>{todo.title}</span>
           </>
         )}
