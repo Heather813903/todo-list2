@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import TextInputWithLabel from '../../shared/TextInputWithLabel.jsx';
-import { isValidTodoTitle } from '../../utils/todoValidation.js';
+import { useState } from "react";
+import TextInputWithLabel from "../../../shared/TextInputWithLabel.jsx";
+import { isValidTodoTitle } from "../../../utils/todoValidation.js";
 
 function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -44,10 +44,7 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
               Cancel
             </button>
 
-            <button
-              type="submit"
-              disabled={!isValidTodoTitle(workingTitle)}
-            >
+            <button type="submit" disabled={!isValidTodoTitle(workingTitle)}>
               Update
             </button>
           </>
