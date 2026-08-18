@@ -10,6 +10,7 @@ function TodosPage({ token }) {
   useEffect(() => {
     const fetchTodos = async () => {
       try {
+        setError("");
         setIsTodoListLoading(true);
 
         const params = new URLSearchParams({
@@ -45,6 +46,8 @@ function TodosPage({ token }) {
   }, [token]);
 
   async function addTodo(todoTitle) {
+    setError("");
+
     const newTodo = {
       id: Date.now(),
       title: todoTitle,
@@ -85,7 +88,14 @@ function TodosPage({ token }) {
   }
 
   async function completeTodo(id) {
+    setError("");
+
     const originalTodo = todoList.find((todo) => todo.id === id);
+
+    if (!originalTodo) {
+      setError("Todo not found");
+      return;
+    }
 
     setTodoList((previous) =>
       previous.map((todo) =>
@@ -118,7 +128,14 @@ function TodosPage({ token }) {
   }
 
   async function updateTodo(editedTodo) {
+    setError("");
+
     const originalTodo = todoList.find((todo) => todo.id === editedTodo.id);
+
+    if (!originalTodo) {
+      setError("Todo not found");
+      return;
+    }
 
     setTodoList((previous) =>
       previous.map((todo) =>
