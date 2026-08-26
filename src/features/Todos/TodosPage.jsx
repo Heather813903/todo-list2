@@ -8,6 +8,7 @@ import useDebounce from "../../utils/useDebounce.js";
 function TodosPage({ token }) {
   const [todoList, setTodoList] = useState([]);
   const [error, setError] = useState("");
+  const [filterError, setFilterError] = useState("");
   const [isTodoListLoading, setIsTodoListLoading] = useState(false);
   const [sortBy, setSortBy] = useState("createdAt");
   const [sortDirection, setSortDirection] = useState("desc");
@@ -44,13 +45,22 @@ function TodosPage({ token }) {
 
         if (response.ok) {
           setTodoList(data.tasks);
+          setFilterError("");
         } else if (response.status === 401) {
           throw new Error("unauthorized");
         } else {
           throw new Error("Failed to fetch todos");
         }
       } catch (error) {
-        setError(error.message);
+        if (
+          debouncedFilterTerm ||
+          sortBy !== "createdAt" ||
+          sortDirection !== "desc"
+        ) {
+          setFilterError(`Error filtering/sorting todos: ${error.message}`);
+        } else {
+          setError(`Error fetching todos: ${error.message}`);
+        }
       } finally {
         setIsTodoListLoading(false);
       }
@@ -205,6 +215,28 @@ function TodosPage({ token }) {
           <p>{error}</p>
           <button type="button" onClick={() => setError("")}>
             Clear Error
+          </button>
+        </div>
+      )}
+
+      {filterError && (
+        <div>
+          <p>{filterError}</p>
+
+          <button type="button" onClick={() => setFilterError("")}>
+            Clear Filter Error
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setFilterTerm("");
+              setSortBy("createdAt");
+              setSortDirection("desc");
+              setFilterError("");
+            }}
+          >
+            Reset Filters
           </button>
         </div>
       )}
