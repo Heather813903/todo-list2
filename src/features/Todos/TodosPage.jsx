@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import TodoForm from "./TodoForm.jsx";
 import TodoList from "./TodoList/TodoList.jsx";
 import SortBy from "../../shared/SortBy.jsx";
@@ -12,6 +12,7 @@ function TodosPage({ token }) {
   const [sortBy, setSortBy] = useState("createdAt");
   const [sortDirection, setSortDirection] = useState("desc");
   const [filterTerm, setFilterTerm] = useState("");
+  const [dataVersion, setDataVersion] = useState(0);
   const debouncedFilterTerm = useDebounce(filterTerm, 300);
 
   useEffect(() => {
@@ -64,6 +65,11 @@ function TodosPage({ token }) {
     setFilterTerm(newTerm);
   };
 
+  const invalidateCache = useCallback(() => {
+    console.log("Invalidating memo cache after todo mutation");
+    setDataVersion((prev) => prev + 1);
+  }, []);
+
   async function addTodo(todoTitle) {
     setError("");
 
@@ -95,6 +101,7 @@ function TodosPage({ token }) {
         setTodoList((previous) =>
           previous.map((todo) => (todo.id === newTodo.id ? data : todo)),
         );
+        invalidateCache();
       } else {
         throw new Error("Failed to add todo");
       }
@@ -138,6 +145,7 @@ function TodosPage({ token }) {
       if (!response.ok) {
         throw new Error("Failed to complete todo");
       }
+      invalidateCache();
     } catch (error) {
       setTodoList((previous) =>
         previous.map((todo) => (todo.id === id ? originalTodo : todo)),
@@ -179,6 +187,7 @@ function TodosPage({ token }) {
       if (!response.ok) {
         throw new Error("Failed to update todo");
       }
+      invalidateCache();
     } catch (error) {
       setTodoList((previous) =>
         previous.map((todo) =>
@@ -220,6 +229,7 @@ function TodosPage({ token }) {
         todoList={todoList}
         onCompleteTodo={completeTodo}
         onUpdateTodo={updateTodo}
+        dataVersion={dataVersion}
       />
     </>
   );
