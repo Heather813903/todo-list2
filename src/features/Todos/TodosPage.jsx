@@ -14,6 +14,7 @@ import { useAuth } from "../../contexts/AuthContext.jsx";
 function TodosPage() {
   const { token } = useAuth();
   const [state, dispatch] = useReducer(todoReducer, initialTodoState);
+
   const {
     todoList,
     error,
@@ -67,7 +68,7 @@ function TodosPage() {
         const isFilterError =
           debouncedFilterTerm ||
           sortBy !== "createdAt" ||
-          sortDirection !== "desc";
+          sortDirection !== "asc";
 
         dispatch({
           type: TODO_ACTIONS.FETCH_ERROR,
@@ -189,6 +190,7 @@ function TodosPage() {
       });
     }
   }
+
   async function updateTodo(editedTodo) {
     const originalTodo = todoList.find((todo) => todo.id === editedTodo.id);
 

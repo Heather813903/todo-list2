@@ -28,9 +28,9 @@ export const initialTodoState = {
   todoList: [],
   error: "",
   filterError: "",
-  isTodoListLoading: false,
+  isTodoListLoading: true,
   sortBy: "createdAt",
-  sortDirection: "desc",
+  sortDirection: "asc",
   filterTerm: "",
   dataVersion: 0,
 };
@@ -50,6 +50,7 @@ export function todoReducer(state, action) {
         ...state,
         todoList: action.payload.todos,
         isTodoListLoading: false,
+        error: "",
         filterError: "",
       };
 
@@ -57,12 +58,8 @@ export function todoReducer(state, action) {
       return {
         ...state,
         isTodoListLoading: false,
-        error: action.payload.isFilterError
-          ? state.error
-          : action.payload.message,
-        filterError: action.payload.isFilterError
-          ? action.payload.message
-          : state.filterError,
+        error: action.payload.isFilterError ? "" : action.payload.message,
+        filterError: action.payload.isFilterError ? action.payload.message : "",
       };
 
     case TODO_ACTIONS.ADD_TODO_START:
@@ -155,16 +152,16 @@ export function todoReducer(state, action) {
         filterTerm: action.payload.filterTerm,
       };
 
-    case TODO_ACTIONS.CLEAR_ERROR:
-      return {
-        ...state,
-        error: "",
-      };
-
     case TODO_ACTIONS.SET_ERROR:
       return {
         ...state,
         error: action.payload.message,
+      };
+
+    case TODO_ACTIONS.CLEAR_ERROR:
+      return {
+        ...state,
+        error: "",
       };
 
     case TODO_ACTIONS.CLEAR_FILTER_ERROR:
@@ -178,7 +175,7 @@ export function todoReducer(state, action) {
         ...state,
         filterTerm: "",
         sortBy: "createdAt",
-        sortDirection: "desc",
+        sortDirection: "asc",
         filterError: "",
       };
 
