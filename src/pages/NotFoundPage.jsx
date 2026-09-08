@@ -17,6 +17,10 @@ function NotFoundPage() {
       <p>
         <Link to="/about">Go to About</Link>
       </p>
+
+      <p>
+        <Link to="/login">Go to Login</Link>
+      </p>
     </div>
   );
 }

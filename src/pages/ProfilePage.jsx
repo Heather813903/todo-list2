@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext.jsx";
 
 function ProfilePage() {
-  const { email, token } = useAuth();
+  const { name, token } = useAuth();
 
   const [todoStats, setTodoStats] = useState({
     total: 0,
@@ -39,7 +39,8 @@ function ProfilePage() {
           throw new Error("Failed to fetch todos");
         }
 
-        const todos = await response.json();
+        const data = await response.json();
+        const todos = data.tasks;
 
         const total = todos.length;
         const completed = todos.filter((todo) => todo.isCompleted).length;
@@ -67,7 +68,7 @@ function ProfilePage() {
 
       <section>
         <h3>Account Information</h3>
-        <p>Name: {email}</p>
+        <p>Name: {name}</p>
         <p>Status: {token ? "Authenticated" : "Not authenticated"}</p>
       </section>
 
