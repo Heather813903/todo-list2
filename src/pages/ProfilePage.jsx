@@ -14,7 +14,10 @@ function ProfilePage() {
 
   useEffect(() => {
     async function fetchTodoStats() {
-      if (!token) return;
+      if (!token) {
+        setLoading(false);
+        return;
+      }
 
       try {
         setLoading(true);
@@ -65,7 +68,7 @@ function ProfilePage() {
       <section>
         <h3>Account Information</h3>
         <p>Name: {email}</p>
-        <p>Status: Authenticated</p>
+        <p>Status: {token ? "Authenticated" : "Not authenticated"}</p>
       </section>
 
       <section>
@@ -81,9 +84,7 @@ function ProfilePage() {
             <p>Completed Todos: {todoStats.completed}</p>
             <p>Active Todos: {todoStats.active}</p>
 
-            {todoStats.total > 0 && (
-              <p>Completion: {completionPercentage}%</p>
-            )}
+            {todoStats.total > 0 && <p>Completion: {completionPercentage}%</p>}
           </>
         )}
       </section>
