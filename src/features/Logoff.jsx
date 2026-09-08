@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext.jsx";
 
 function Logoff() {
   const { logout } = useAuth();
+  const navigate = useNavigate();
+
   const [logoutError, setLogoutError] = useState("");
   const [isLoggingOff, setIsLoggingOff] = useState(false);
 
@@ -12,11 +15,12 @@ function Logoff() {
 
     const result = await logout();
 
-    if (!result.success) {
+    if (result.success) {
+      navigate("/login");
+    } else {
       setLogoutError(result.error);
+      setIsLoggingOff(false);
     }
-
-    setIsLoggingOff(false);
   };
 
   return (
