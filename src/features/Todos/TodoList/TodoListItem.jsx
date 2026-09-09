@@ -1,6 +1,7 @@
 import { useState } from "react";
 import TextInputWithLabel from "../../../shared/TextInputWithLabel.jsx";
 import { isValidTodoTitle } from "../../../utils/todoValidation.js";
+import styles from "./TodoList.module.css";
 
 function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -29,8 +30,8 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   };
 
   return (
-    <li>
-      <form onSubmit={handleUpdate}>
+    <li className={styles.item}>
+      <form className={styles.itemForm} onSubmit={handleUpdate}>
         {isEditing ? (
           <>
             <TextInputWithLabel
@@ -55,7 +56,12 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
               checked={todo.isCompleted}
               onChange={() => onCompleteTodo(todo.id)}
             />
-            <span onClick={() => setIsEditing(true)}>{todo.title}</span>
+            <span
+              className={styles.todoTitle}
+              onClick={() => setIsEditing(true)}
+            >
+              {todo.title}
+            </span>
           </>
         )}
       </form>

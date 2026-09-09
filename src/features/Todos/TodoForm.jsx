@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import TextInputWithLabel from "../../shared/TextInputWithLabel.jsx";
 import { isValidTodoTitle } from "../../utils/todoValidation.js";
+import styles from "./TodoForm.module.css";
 
 function TodoForm({ onAddTodo }) {
   const inputRef = useRef();
@@ -18,7 +19,7 @@ function TodoForm({ onAddTodo }) {
   };
 
   return (
-    <form onSubmit={handleAddTodo}>
+    <form className={styles.form} onSubmit={handleAddTodo}>
       <TextInputWithLabel
         elementId="todoTitle"
         labelText="Todo"
