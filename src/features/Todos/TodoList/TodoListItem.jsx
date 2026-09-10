@@ -1,6 +1,9 @@
 import { useState } from "react";
 import TextInputWithLabel from "../../../shared/TextInputWithLabel.jsx";
-import { isValidTodoTitle } from "../../../utils/todoValidation.js";
+import {
+  isValidTodoTitle,
+  MAX_TODO_TITLE_LENGTH,
+} from "../../../utils/todoValidation.js";
 import styles from "./TodoList.module.css";
 
 function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
@@ -17,9 +20,9 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   };
 
   const handleUpdate = (event) => {
-    if (!isEditing) return;
-
     event.preventDefault();
+
+    if (!isEditing || !isValidTodoTitle(workingTitle)) return;
 
     onUpdateTodo({
       ...todo,
@@ -38,6 +41,7 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
               elementId={`todoTitle${todo.id}`}
               labelText="Todo"
               value={workingTitle}
+              maxLength={MAX_TODO_TITLE_LENGTH}
               onChange={handleEdit}
             />
 

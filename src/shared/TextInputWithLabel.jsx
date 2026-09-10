@@ -3,6 +3,7 @@ import styles from "./FormControls.module.css";
 function TextInputWithLabel({
   elementId,
   labelText,
+  maxLength,
   onChange,
   ref,
   value,
@@ -18,6 +19,7 @@ function TextInputWithLabel({
         id={elementId}
         ref={ref}
         value={value}
+        maxLength={maxLength}
         onChange={onChange}
       />
     </div>
