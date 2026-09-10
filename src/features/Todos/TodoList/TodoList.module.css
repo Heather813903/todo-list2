@@ -25,9 +25,32 @@
 }
 
 .item input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border: 2px solid #4f46e5;
+  border-radius: 4px;
+  background-color: #ffffff;
   cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.item input[type="checkbox"]:checked {
+  background-color: #4f46e5;
+  border-color: #4f46e5;
+}
+
+.item input[type="checkbox"]:checked::after {
+  content: "✓";
+  display: block;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 18px;
+  text-align: center;
 }
 
 .item button {
