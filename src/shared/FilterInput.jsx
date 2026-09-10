@@ -1,8 +1,13 @@
+import styles from "./FormControls.module.css";
+
 function FilterInput({ filterTerm, onFilterChange }) {
   return (
-    <div>
-      <label htmlFor="filterInput">Search todos:</label>
+    <div className={styles.control}>
+      <label className={styles.label} htmlFor="filterInput">
+        Search todos:
+      </label>
       <input
+        className={styles.input}
         id="filterInput"
         type="text"
         value={filterTerm}

@@ -1,0 +1,42 @@
+.control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.label {
+  font-weight: 600;
+}
+
+.input,
+.select {
+  height: 44px;
+  padding: 0 0.75rem;
+  border: 1px solid currentColor;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font: inherit;
+  background-color: transparent;
+}
+
+.input:focus-visible,
+.select:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.sortControls {
+  display: flex;
+  gap: 1rem;
+}
+
+@media (max-width: 600px) {
+  .sortControls {
+    flex-direction: column;
+  }
+
+  .input,
+  .select {
+    width: 100%;
+  }
+}
