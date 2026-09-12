@@ -105,7 +105,8 @@ Future improvements could include:
 
 ## License
 
-This project was created for educational purposes as part of the Code The Dream React curriculum.
+
+This project is licensed under the MIT License.
 
 ## Contact
 
