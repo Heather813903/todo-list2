@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { useAuth } from "../contexts/AuthContext.jsx";
+import styles from "./Pages.module.css";
 
 function LoginPage() {
   const { login, isAuthenticated } = useAuth();
@@ -35,31 +36,43 @@ function LoginPage() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="email">Email</label>
-      <input
-        id="email"
-        type="email"
-        value={email}
-        onChange={(event) => setEmail(event.target.value)}
-        required
-      />
+    <main className={styles.page}>
+      <div className={styles.loginCard}>
+        <h2 className={styles.pageTitle}>Log In</h2>
 
-      <label htmlFor="password">Password</label>
-      <input
-        id="password"
-        type="password"
-        value={password}
-        onChange={(event) => setPassword(event.target.value)}
-        required
-      />
+        <form className={styles.loginForm} onSubmit={handleSubmit}>
+          <div className={styles.formGroup}>
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              maxLength={254}
+              required
+            />
+          </div>
 
-      <button type="submit" disabled={isLoggingOn}>
-        {isLoggingOn ? "Logging in..." : "Log On"}
-      </button>
+          <div className={styles.formGroup}>
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              maxLength={128}
+              required
+            />
+          </div>
 
-      {authError && <p>{authError}</p>}
-    </form>
+          <button type="submit" disabled={isLoggingOn}>
+            {isLoggingOn ? "Logging in..." : "Log On"}
+          </button>
+
+          {authError && <p className={styles.error}>{authError}</p>}
+        </form>
+      </div>
+    </main>
   );
 }
 

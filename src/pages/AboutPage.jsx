@@ -1,9 +1,11 @@
+import styles from "./Pages.module.css";
+
 function AboutPage() {
   return (
-    <div>
-      <h2>About</h2>
+    <main className={styles.page}>
+      <h2 className={styles.pageTitle}>About</h2>
 
-      <section>
+      <section className={styles.section}>
         <h3>App Features</h3>
         <p>
           This todo app allows users to create, update, complete, and manage
@@ -11,7 +13,7 @@ function AboutPage() {
         </p>
       </section>
 
-      <section>
+      <section className={styles.section}>
         <h3>Technologies Used</h3>
         <ul>
           <li>React</li>
@@ -19,7 +21,7 @@ function AboutPage() {
           <li>Vite</li>
         </ul>
       </section>
-    </div>
+    </main>
   );
 }
 

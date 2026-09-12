@@ -1,24 +1,29 @@
-function TextInputWithLabel( {
-    elementId,
-    labelText,
-    onChange,
-    ref,
-    value,
+import styles from "./FormControls.module.css";
+
+function TextInputWithLabel({
+  elementId,
+  labelText,
+  maxLength,
+  onChange,
+  ref,
+  value,
 }) {
-    return (
-        <>
-        <label htmlFor={elementId}>{labelText}</label>
-            <input
-                type="text"
-                id={elementId}
-                ref={ref}
-                value={value}
-                onChange={onChange}
-            />
-        </>
-    );
-
-
+  return (
+    <div className={styles.control}>
+      <label className={styles.label} htmlFor={elementId}>
+        {labelText}
+      </label>
+      <input
+        className={styles.input}
+        type="text"
+        id={elementId}
+        ref={ref}
+        value={value}
+        maxLength={maxLength}
+        onChange={onChange}
+      />
+    </div>
+  );
 }
 
 export default TextInputWithLabel;

@@ -42,7 +42,7 @@ export function AuthProvider({ children }) {
 
       return {
         success: false,
-        error: `Authentication failed: ${data?.message}`,
+        error: "Unable to log in. Please check your email and password.",
       };
     } catch {
       return {

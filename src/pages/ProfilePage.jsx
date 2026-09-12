@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext.jsx";
+import styles from "./Pages.module.css";
 
 function ProfilePage() {
   const { name, token } = useAuth();
@@ -29,7 +30,7 @@ function ProfilePage() {
           credentials: "include",
         };
 
-        const response = await fetch("/api/tasks", options);
+        const response = await fetch("/api/tasks?limit=100", options);
 
         if (response.status === 401) {
           throw new Error("Unauthorized");
@@ -63,21 +64,21 @@ function ProfilePage() {
       : 0;
 
   return (
-    <div>
-      <h2>Profile</h2>
+    <main className={styles.page}>
+      <h2 className={styles.pageTitle}>Profile</h2>
 
-      <section>
+      <section className={styles.section}>
         <h3>Account Information</h3>
         <p>Name: {name}</p>
         <p>Status: {token ? "Authenticated" : "Not authenticated"}</p>
       </section>
 
-      <section>
+      <section className={styles.section}>
         <h3>Todo Statistics</h3>
 
-        {loading && <p>Loading statistics...</p>}
+        {loading && <p className={styles.loading}>Loading statistics...</p>}
 
-        {error && <p>{error}</p>}
+        {error && <p className={styles.error}>{error}</p>}
 
         {!loading && !error && (
           <>
@@ -89,7 +90,7 @@ function ProfilePage() {
           </>
         )}
       </section>
-    </div>
+    </main>
   );
 }
 

@@ -1,0 +1,35 @@
+.todosPage {
+  width: min(90%, 900px);
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.error {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid currentColor;
+  border-radius: 8px;
+}
+
+.loading {
+  margin: 1rem 0;
+}
+
+@media (max-width: 600px) {
+  .todosPage {
+    width: 100%;
+    margin: 1rem auto;
+    padding: 1rem;
+  }
+
+  .controls {
+    flex-direction: column;
+  }
+}

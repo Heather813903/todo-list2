@@ -12,6 +12,7 @@ import {
   todoReducer,
 } from "../reducers/todoReducer.js";
 import { useAuth } from "../contexts/AuthContext.jsx";
+import styles from "./TodosPage.module.css";
 
 function TodosPage() {
   const { token } = useAuth();
@@ -245,9 +246,9 @@ function TodosPage() {
   }
 
   return (
-    <>
+    <main className={styles.todosPage}>
       {error && (
-        <div>
+        <div className={styles.error}>
           <p>{error}</p>
           <button
             type="button"
@@ -259,7 +260,7 @@ function TodosPage() {
       )}
 
       {filterError && (
-        <div>
+        <div className={styles.error}>
           <p>{filterError}</p>
 
           <button
@@ -278,37 +279,41 @@ function TodosPage() {
         </div>
       )}
 
-      {isTodoListLoading && <p>Loading todos...</p>}
+      {isTodoListLoading && (
+        <p className={styles.loading}>Loading todos...</p>
+      )}
 
-      <SortBy
-        sortBy={sortBy}
-        sortDirection={sortDirection}
-        onSortByChange={(newSortBy) =>
-          dispatch({
-            type: TODO_ACTIONS.SET_SORT,
-            payload: {
-              sortBy: newSortBy,
-              sortDirection,
-            },
-          })
-        }
-        onSortDirectionChange={(newSortDirection) =>
-          dispatch({
-            type: TODO_ACTIONS.SET_SORT,
-            payload: {
-              sortBy,
-              sortDirection: newSortDirection,
-            },
-          })
-        }
-      />
+      <div className={styles.controls}>
+        <SortBy
+          sortBy={sortBy}
+          sortDirection={sortDirection}
+          onSortByChange={(newSortBy) =>
+            dispatch({
+              type: TODO_ACTIONS.SET_SORT,
+              payload: {
+                sortBy: newSortBy,
+                sortDirection,
+              },
+            })
+          }
+          onSortDirectionChange={(newSortDirection) =>
+            dispatch({
+              type: TODO_ACTIONS.SET_SORT,
+              payload: {
+                sortBy,
+                sortDirection: newSortDirection,
+              },
+            })
+          }
+        />
 
-      <StatusFilter />
+        <StatusFilter />
 
-      <FilterInput
-        filterTerm={filterTerm}
-        onFilterChange={handleFilterChange}
-      />
+        <FilterInput
+          filterTerm={filterTerm}
+          onFilterChange={handleFilterChange}
+        />
+      </div>
 
       <TodoForm onAddTodo={addTodo} />
 
@@ -319,7 +324,7 @@ function TodosPage() {
         dataVersion={dataVersion}
         statusFilter={statusFilter}
       />
-    </>
+    </main>
   );
 }
 

@@ -1,6 +1,10 @@
 import { useRef, useState } from "react";
 import TextInputWithLabel from "../../shared/TextInputWithLabel.jsx";
-import { isValidTodoTitle } from "../../utils/todoValidation.js";
+import {
+  isValidTodoTitle,
+  MAX_TODO_TITLE_LENGTH,
+} from "../../utils/todoValidation.js";
+import styles from "./TodoForm.module.css";
 
 function TodoForm({ onAddTodo }) {
   const inputRef = useRef();
@@ -9,7 +13,7 @@ function TodoForm({ onAddTodo }) {
   const handleAddTodo = (event) => {
     event.preventDefault();
 
-    if (workingTodoTitle.trim()) {
+    if (isValidTodoTitle(workingTodoTitle)) {
       onAddTodo(workingTodoTitle);
       setWorkingTodoTitle("");
 
@@ -18,12 +22,13 @@ function TodoForm({ onAddTodo }) {
   };
 
   return (
-    <form onSubmit={handleAddTodo}>
+    <form className={styles.form} onSubmit={handleAddTodo}>
       <TextInputWithLabel
         elementId="todoTitle"
         labelText="Todo"
         ref={inputRef}
         value={workingTodoTitle}
+        maxLength={MAX_TODO_TITLE_LENGTH}
         onChange={(event) => setWorkingTodoTitle(event.target.value)}
       />
 
