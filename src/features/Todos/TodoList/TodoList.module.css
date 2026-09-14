@@ -9,14 +9,19 @@
 
 .item {
   padding: 1rem;
-  border: 1px solid currentColor;
+  border: 1px solid #c7d2fe;
   border-radius: 8px;
+  background-color: #ffffff;
 }
 
 .itemForm {
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+.itemForm > div {
+  flex: 1;
 }
 
 .todoTitle {
@@ -80,6 +85,10 @@
 @media (max-width: 600px) {
   .itemForm {
     flex-wrap: wrap;
+  }
+
+  .itemForm > div {
+    flex-basis: 100%;
   }
 
   .todoTitle {

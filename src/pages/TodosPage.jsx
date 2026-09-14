@@ -245,6 +245,49 @@ function TodosPage() {
     }
   }
 
+  async function deleteTodo(id) {
+    const originalTodo = todoList.find((todo) => todo.id === id);
+
+    if (!originalTodo) {
+      dispatch({
+        type: TODO_ACTIONS.SET_ERROR,
+        payload: { message: "Todo not found" },
+      });
+      return;
+    }
+
+    dispatch({
+      type: TODO_ACTIONS.DELETE_TODO_START,
+      payload: { id },
+    });
+
+    try {
+      const response = await fetch(`/api/tasks/${id}`, {
+        method: "DELETE",
+        headers: {
+          "X-CSRF-TOKEN": token,
+        },
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete todo");
+      }
+
+      dispatch({
+        type: TODO_ACTIONS.DELETE_TODO_SUCCESS,
+      });
+    } catch (error) {
+      dispatch({
+        type: TODO_ACTIONS.DELETE_TODO_ERROR,
+        payload: {
+          originalTodo,
+          message: error.message,
+        },
+      });
+    }
+  }
+
   return (
     <main className={styles.todosPage}>
       {error && (
@@ -279,9 +322,7 @@ function TodosPage() {
         </div>
       )}
 
-      {isTodoListLoading && (
-        <p className={styles.loading}>Loading todos...</p>
-      )}
+      {isTodoListLoading && <p className={styles.loading}>Loading todos...</p>}
 
       <div className={styles.controls}>
         <SortBy
@@ -321,6 +362,7 @@ function TodosPage() {
         todoList={todoList}
         onCompleteTodo={completeTodo}
         onUpdateTodo={updateTodo}
+        onDeleteTodo={deleteTodo}
         dataVersion={dataVersion}
         statusFilter={statusFilter}
       />

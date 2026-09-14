@@ -6,7 +6,7 @@ import {
 } from "../../../utils/todoValidation.js";
 import styles from "./TodoList.module.css";
 
-function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
+function TodoListItem({ todo, onCompleteTodo, onUpdateTodo, onDeleteTodo }) {
   const [isEditing, setIsEditing] = useState(false);
   const [workingTitle, setWorkingTitle] = useState(todo.title);
 
@@ -66,6 +66,10 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
             >
               {todo.title}
             </span>
+
+            <button type="button" onClick={() => onDeleteTodo(todo.id)}>
+              Delete
+            </button>
           </>
         )}
       </form>
